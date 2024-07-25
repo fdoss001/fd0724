@@ -10,13 +10,14 @@ import jakarta.persistence.Table;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "tools")
+@Table(name = "TOOL")
 public class Tool {
     @Id
-    private String code;
-    private String type;
-    private String brand;
-    private double dailyCharge;
-    private boolean weekendCharge;
-    private boolean holidayCharge;
+    private String toolCode;
+    private String toolType;
+    private String toolBrand;
+
+    public ToolType getToolType() {
+        return ToolType.valueOf(toolType.toUpperCase());
+    }
 }

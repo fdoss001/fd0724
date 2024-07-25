@@ -1,27 +1,47 @@
 package com.pos.demo.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Data
+@NoArgsConstructor
 public class RentalAgreement {
-    private String toolCode;
-    private String toolType;
-    private String toolBrand;
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yy");
+
+    private Tool tool;
     private int rentalDays;
     private LocalDate checkoutDate;
     private LocalDate dueDate;
-    private double dailyRentalCharge;
+    private BigDecimal dailyRentalCharge;
     private int chargeDays;
-    private double preDiscountCharge;
+    private BigDecimal preDiscountCharge;
     private int discountPercent;
-    private double discountAmount;
-    private double finalCharge;
+    private BigDecimal discountAmount;
+    private BigDecimal finalCharge;
 
-    public void printAgreement() {
-        System.out.printf("Tool code: %s\nTool type: %s\nTool brand: %s\nRental days: %d\nCheckout date: %s\nDue date: %s\nDaily rental charge: $%.2f\nCharge days: %d\nPre-discount charge: $%.2f\nDiscount percent: %d%%\nDiscount amount: $%.2f\nFinal charge: $%.2f\n",
-                toolCode, toolType, toolBrand, rentalDays, checkoutDate, dueDate, dailyRentalCharge, chargeDays, preDiscountCharge, discountPercent, discountAmount, finalCharge);
+    @Override
+    public String toString() {
+
+        String toFmt = """
+                Tool code: %s
+                Tool type: %s
+                Tool brand: %s
+                Rental days: %d
+                Checkout date: %s
+                Due date: %s
+                Daily rental charge: $%.2f
+                Charge days: %d
+                Pre-discount charge: $%.2f
+                Discount percent: %d%%
+                Discount amount: $%.2f
+                Final charge: $%.2f
+                """;
+        return String.format(toFmt, tool.getToolCode(), tool.getToolType().getTypeName(), tool.getToolBrand(), rentalDays,
+                DATE_FORMATTER.format(checkoutDate), DATE_FORMATTER.format(dueDate), dailyRentalCharge, chargeDays,
+                preDiscountCharge, discountPercent, discountAmount, finalCharge);
     }
 }
-
